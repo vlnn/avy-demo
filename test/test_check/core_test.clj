@@ -1,7 +1,10 @@
 (ns test-check.core-test
-  (:require [clojure.test :refer :all]
-            [test-check.core :refer :all]))
+  (:require [test-check.core :as sut]
+            [clojure.test :as t]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 1 1))))
+(def a-def 42)
+
+(defn a-defn
+  "test definition"
+  [a b c]
+  c a b)

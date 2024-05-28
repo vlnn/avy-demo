@@ -1,0 +1,39 @@
+#+title: No mouse really needed... simplified.
+
+Vim and evil mode are well known with "keyboard only" approaches. I've spent some time trying to go mouseless and at last I'm in my comfort zone. Let's see some examples:
+
+1. Move cursor scenario
+   1.1 Mouse/trackpad
+   1.2 =?= and several =n= in evil-mode
+   1.3 =evil-avy-goto-char-timer= and start typing what you see where you want to go. I've mapped this function to the chord 'jk' and it's really easy to call
+
+2. Change a word (rename a function, change the const etc)
+   2.1 Mouse: Click the function name twice or swipe the cursor, then =c= and start typing new name
+   2.2 Move cursor as in 1.2, =cW=, start typing
+   2.3 Same as 1.3, =cW=, start typing
+   2.4 NEW: 'jk', start typing old name (2-3 chars), =q= and selector char, type new name
+
+3. Copy a sexp to your current cursor point
+   3.1 Mouse: highlight whole sexp, =y= or =C-c=, move where you want to copy it, then =p= or =C-v=
+   3.2 Evil: move cursor as in 1.2, =ya)=, move cursor back with =C-o=, paste with =p=
+   3.3 NEW: 'jk', 2-3 chars of sexp, =y=, selector char.
+
+4. Move a sexp to the current cursor point
+   4.1 Mouse: highlight whole sexp, =d=, move where you want to copy it, then =p= or =C-v=
+   4.2 Evil: move cursor as in 1.2, =da)=, =C-o=, =p=
+   4.3 NEW: 'jk', 2-3 chars of sexp, =t=, selector char
+
+5. Delete a sexp
+   4.1 Mouse: highlight, =<DEL>=
+   4.2 Evil: move cursor as in 1.2, =da)=
+   4.3 NEW: 'jk', 2-3 chars of sexp, =x=, selector char
+
+6. Eval a sexp
+   4.1 Mouse: get to the sexp, right click, eval
+   4.2 Evil: Move cursor as in 1.2, =SPC m e d=
+   4.3 NEW: 'jk', 2-3 chars of sexp, =e=, selector char
+
+7. Comment a sexp
+   4.1 Mouse: get to sexp beginning, =(comment =
+   4.2 Evil: Move as in 1.2, =comment-region= or something like that
+   4.3 NEW: 'jk', 2-3 chars of sexp, =C=, selector char
