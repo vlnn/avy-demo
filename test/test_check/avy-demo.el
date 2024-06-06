@@ -13,18 +13,14 @@
             ";; at last I'm in my comfort zone."
             ";; Let me show you some examples of such mouseless workflow:")))
 
-(defun clean-tmp-file ()
-  (find-file "tmp.clj")
-  (not-modified)
-  (kill-current-buffer)
-  (delete-file "tmp.clj"))
-
-
 (defun demo-jump-to-a-def ()
   (demo-insert-comments
           '(";; I want to move cursor to a definition of the function by its name."
-            ";; Pressing 'jk' (bound to =avy-goto-char-timer=), then start typing 'a-def', and then"
+            ";; Run =avy-goto-char-timer= (bound in my setup to 'jk') then start typing 'a-def', and then"
             ";; choose where you're jumping by pressing 'd'"))
+  (with-file-contents! "core_test.clj"
+    (+default/yank-buffer-contents))
+  (demo-it-insert (current-kill 0))
   (evil-execute-macro 1 (kmacro "<escape>"))
   (setq unread-command-events
         (nconc (listify-key-sequence "gs/a-def") unread-command-events))
@@ -32,16 +28,23 @@
     (lambda ()(setq unread-command-events
                     (nconc (listify-key-sequence "d") unread-command-events)))))
 
+(defun init ()
+  (find-file "tmp.clj")
+  (goto-char(point-min))
+  (delete-line)
+  (delete-line)
+  (demo-it-load-file "tmp.clj" :none))
 
-
-(demo-it-create :single-window :advance-mode :insert-faster
-  (copy-file "core_test.clj" "tmp.clj")
-  (demo-it-load-file "tmp.clj" :none)
+(with-temp-file "tmp.clj" "(comment boo)")
+(demo-it-create :single-window :advance-mode :insert-fast
+  (init)
   (demo-start-intro)
   (demo-jump-to-a-def)
-  (demo-insert-comments '(";; Note how 'jump' symbols are highlighted."
+  (demo-insert-comments '(";; Note how 'jump' symbols were highlighted."
                           ";; Also they are located on keyboard's home row: 'asdf' and 'jkl;'"
-                          ";; These are configurable, of course."))
-  (clean-tmp-file))
+                          ";; These are also configurable, of course (see =avy-keys="))
+  (demo-insert-comments '(";; OK, we've jumped quite fast without using a mouse."
+                          ";; Let's run some commands!")))
 
 (demo-it-start)
+(delete-file "tmp.clj")
